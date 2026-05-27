@@ -332,6 +332,7 @@ section {
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(8px);
+  margin-bottom: 1px;
 }
 
 .project-card::before {
@@ -382,6 +383,38 @@ section {
   color: var(--accent);
   border: 1px solid rgba(200,169,126,0.2);
 }
+
+.project-badge-live {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.9rem;
+  border-radius: 2px;
+  background: rgba(34,197,94,0.08);
+  color: #4ade80;
+  border: 1px solid rgba(34,197,94,0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.project-badge-live::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.project-badge-live:hover {
+  background: rgba(34,197,94,0.15);
+  border-color: rgba(34,197,94,0.5);
+}
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
 .project-title {
   font-family: var(--display);
@@ -467,21 +500,6 @@ section {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-top: 0.35rem;
-}
-
-.coming-soon {
-  margin-top: 1px;
-  padding: 3rem;
-  border: 1px dashed rgba(200,169,126,0.15);
-  border-radius: 4px;
-  text-align: center;
-}
-
-.coming-soon p {
-  font-family: var(--display);
-  font-size: 1.1rem;
-  font-style: italic;
-  color: var(--muted);
 }
 
 .about-grid {
@@ -701,6 +719,8 @@ footer {
 
   <section id="projects">
     <div class="section-label">01 — Projects</div>
+
+    <!-- PROJECT 01 — WHOOP -->
     <div class="project-card">
       <div class="project-num">01</div>
       <div class="project-header">
@@ -739,31 +759,60 @@ footer {
         <span class="pill">GitHub</span>
       </div>
       <div class="metrics">
-        <div class="metric">
-          <div class="metric-val">₹0</div>
-          <div class="metric-label">Build cost</div>
-        </div>
-        <div class="metric">
-          <div class="metric-val">7 AM</div>
-          <div class="metric-label">Daily briefing</div>
-        </div>
-        <div class="metric">
-          <div class="metric-val">4</div>
-          <div class="metric-label">DB tables</div>
-        </div>
-        <div class="metric">
-          <div class="metric-val">24/7</div>
-          <div class="metric-label">Always on</div>
-        </div>
-        <div class="metric">
-          <div class="metric-val">~₹0.25</div>
-          <div class="metric-label">Per message</div>
-        </div>
+        <div class="metric"><div class="metric-val">₹0</div><div class="metric-label">Build cost</div></div>
+        <div class="metric"><div class="metric-val">7 AM</div><div class="metric-label">Daily briefing</div></div>
+        <div class="metric"><div class="metric-val">4</div><div class="metric-label">DB tables</div></div>
+        <div class="metric"><div class="metric-val">24/7</div><div class="metric-label">Always on</div></div>
+        <div class="metric"><div class="metric-val">~₹0.25</div><div class="metric-label">Per message</div></div>
       </div>
     </div>
-    <div class="coming-soon">
-      <p>More projects shipping soon — check back.</p>
+
+    <!-- PROJECT 02 — STOCK AGENT -->
+    <div class="project-card" style="margin-top:2px;">
+      <div class="project-num">02</div>
+      <div class="project-header">
+        <a href="/market" target="_blank" class="project-badge-live">Live dashboard ↗</a>
+      </div>
+      <div class="project-title">NSE India<br><em>Market Analysis Agent</em></div>
+      <p class="project-desc">A fully automated daily stock analysis agent built for swing trading on Indian markets. Every weekday at 8:30 AM, GitHub Actions runs a Python pipeline that fetches live prices for 50 Nifty stocks, computes RSI, MACD, Bollinger Bands, Moving Averages, and volume signals — then sends the data to Claude AI, which ranks all stocks by momentum and writes a plain-English brief with the top 5 buy picks, each with an exact entry range, stop loss, price targets, and shares to buy. Results hit your inbox and update a live dashboard automatically. Zero infrastructure cost.</p>
+      <div class="how-it-works">
+        <div class="step">
+          <div class="step-num">01 · Fetch</div>
+          <div class="step-text">yfinance pulls 90 days of OHLCV data for 50 NSE stocks. No API key. No cost.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">02 · Score</div>
+          <div class="step-text">RSI, MACD, MA20/50/200, Bollinger Bands, and volume ratio computed. Each stock gets a momentum score 0–100.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">03 · Rank</div>
+          <div class="step-text">Claude AI reads top 15 candidates and picks 5 highest-conviction swing trades with entry, stop loss, and targets.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">04 · Deliver</div>
+          <div class="step-text">Formatted HTML email sent via Gmail. data.json pushed to GitHub Pages. Dashboard auto-refreshes.</div>
+        </div>
+      </div>
+      <div class="stack">
+        <span class="pill">Python</span>
+        <span class="pill">yfinance</span>
+        <span class="pill">pandas-ta</span>
+        <span class="pill">Anthropic Claude</span>
+        <span class="pill">GitHub Actions</span>
+        <span class="pill">GitHub Pages</span>
+        <span class="pill">Gmail SMTP</span>
+        <span class="pill">NSE India</span>
+        <span class="pill">JSON API</span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="metric-val">50</div><div class="metric-label">Stocks tracked</div></div>
+        <div class="metric"><div class="metric-val">8:30</div><div class="metric-label">AM daily run</div></div>
+        <div class="metric"><div class="metric-val">5</div><div class="metric-label">Buy picks/day</div></div>
+        <div class="metric"><div class="metric-val">₹0</div><div class="metric-label">Infra cost</div></div>
+        <div class="metric"><div class="metric-val">~₹2</div><div class="metric-label">Per brief</div></div>
+      </div>
     </div>
+
   </section>
 
   <section id="about">

@@ -161,93 +161,96 @@ def parse_claude_json(raw):
     return json.loads(raw4)
 
 
+def build_watchlist_locally(stock_data):
+    """Build watchlist from indicators directly — no Claude needed."""
+    watchlist = []
+    for s in stock_data:
+        rsi       = s.get("rsi") or 50
+        score     = s.get("momentum_score", 0)
+        macd_hist = s.get("macd_hist") or 0
+        last      = s["last_close"]
+        ma50      = s.get("ma50") or last
+        if score >= 60 and last > ma50 and macd_hist > 0:
+            signal = "BULLISH"
+        elif score <= 25 or (last < ma50 and macd_hist < 0):
+            signal = "BEARISH"
+        elif score >= 40:
+            signal = "WATCH"
+        else:
+            signal = "NEUTRAL"
+        watchlist.append({
+            "name": s["name"], "ticker": s["ticker"],
+            "price": s["last_close"], "change_pct": s["change_pct"],
+            "rsi": rsi, "signal": signal, "momentum_score": score,
+        })
+    return sorted(watchlist, key=lambda x: x["momentum_score"], reverse=True)
+
+
 def generate_brief_with_claude(stock_data, capital, risk_pct):
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-    today  = date.today().strftime("%A, %d %B %Y")
+    client  = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    today   = date.today().strftime("%A, %d %B %Y")
+    ranked  = sorted(stock_data, key=lambda x: x.get("momentum_score", 0), reverse=True)
+    top15   = ranked[:15]
+    wl      = build_watchlist_locally(stock_data)
 
-    # Send top 20 by momentum score to Claude (keeps prompt tight)
-    ranked = sorted(stock_data, key=lambda x: x.get("momentum_score", 0), reverse=True)
-    top_candidates = ranked[:20]
-    all_summary = [{"name": s["name"], "ticker": s["ticker"],
-                    "price": s["last_close"], "change_pct": s["change_pct"],
-                    "rsi": s["rsi"], "momentum_score": s.get("momentum_score", 0),
-                    "vol_spike": s["vol_spike"], "macd_hist": s.get("macd_hist")}
-                   for s in stock_data]
+    # Stripped-down candidate list — only numbers, no long text
+    candidates = []
+    for s in top15:
+        candidates.append({
+            "name": s["name"].replace("'", "").replace("&", "and"),
+            "ticker": s["ticker"],
+            "price": s["last_close"],
+            "change_pct": s["change_pct"],
+            "rsi": s.get("rsi"),
+            "macd_hist": s.get("macd_hist"),
+            "ma50": s.get("ma50"),
+            "vol_ratio": s.get("vol_ratio"),
+            "score": s.get("momentum_score", 0),
+            "vol_spike": s.get("vol_spike"),
+        })
 
-    prompt = """You are a senior Indian equity trader helping a beginner swing trader (holding 2-7 days).
-Capital per trade: Rs.""" + str(capital) + """ | Risk tolerance: """ + str(risk_pct) + """% per trade
-Today: """ + today + """ | NSE opens 9:15 AM IST
-
-Top 20 candidates by momentum score:
-""" + json.dumps(top_candidates, indent=2) + """
-
-All """ + str(len(stock_data)) + """ stocks summary:
-""" + json.dumps(all_summary, indent=2) + """
-
-Return ONLY valid JSON, no markdown, no extra text:
-{
-  "snapshot": "2-3 sentence market overview. Specific sectors, mood, key themes.",
-  "buy_picks": [
-    {
-      "rank": 1,
-      "name": "Stock Name",
-      "ticker": "TICKER.NS",
-      "price": 1234.56,
-      "change_pct": 1.23,
-      "entry_low": 1220.00,
-      "entry_high": 1235.00,
-      "stop_loss": 1195.00,
-      "target_1": 1270.00,
-      "target_2": 1310.00,
-      "hold_days": "3-5",
-      "shares_to_buy": 20,
-      "capital_needed": 24700,
-      "risk_amount": 500,
-      "conviction": "HIGH",
-      "why": "Specific reason: cite RSI value, MACD direction, volume ratio, MA position. Plain English for a beginner."
-    }
-  ],
-  "alerts": ["specific alert with stock name and exact numbers"],
-  "watchlist": [
-    {"name": "Stock Name", "ticker": "TICKER.NS", "price": 1234.56, "change_pct": 1.23, "rsi": 58.3, "signal": "BULLISH", "momentum_score": 75}
-  ],
-  "theme": "One sentence market mood.",
-  "beginner_tip": "One practical tip for today specifically — what to watch out for, how to place the order, when to exit."
-}
-
-Rules:
-- buy_picks: exactly 5 stocks ranked by conviction. Only BULLISH setups.
-- entry_low/entry_high: realistic range to place limit order at 9:15 AM
-- stop_loss: price below which exit immediately (""" + str(risk_pct) + """% below entry max)
-- target_1: conservative target (3-5 days). target_2: stretch target (1-2 weeks).
-- shares_to_buy: floor(""" + str(capital) + """ / entry_high), rounded to nearest lot
-- capital_needed: shares_to_buy * entry_high
-- risk_amount: (entry_high - stop_loss) * shares_to_buy
-- conviction: HIGH / MEDIUM based on how many indicators align
-- watchlist: ALL """ + str(len(stock_data)) + """ stocks, sorted by momentum_score desc
-- signal: BULLISH / BEARISH / NEUTRAL / WATCH
-- No hedging language. Direct. Beginner-friendly explanations.
-- CRITICAL: Use only plain ASCII in all text fields. No apostrophes, no smart quotes, no special characters. Write "Divis Labs" not "Divi's Labs". JSON must parse cleanly."""
+    schema = (
+        '{"snapshot":"market overview under 50 words",'
+        '"theme":"one sentence under 20 words",'
+        '"beginner_tip":"one tip under 25 words",'
+        '"alerts":["alert 1 under 20 words","alert 2"],'
+        '"buy_picks":['
+        '{"rank":1,"name":"StockName","ticker":"TICKER.NS","price":0.0,"change_pct":0.0,'
+        '"entry_low":0.0,"entry_high":0.0,"stop_loss":0.0,"target_1":0.0,"target_2":0.0,'
+        '"hold_days":"3-5","shares_to_buy":0,"capital_needed":0.0,"risk_amount":0.0,'
+        '"conviction":"HIGH","why":"RSI 55 bullish MACD vol 1.8x above MA50"}'
+        "]}"
+    )
+    prompt = (
+        "You are an Indian equity analyst. Today: " + today + ". NSE 9:15 AM IST. "
+        + "Capital Rs." + str(capital) + " Risk " + str(risk_pct) + "pct per trade. "
+        + "Top candidates: " + json.dumps(candidates) + " "
+        + "Return ONLY this JSON schema filled with real data. No markdown. ASCII only. No apostrophes. "
+        + "Schema: " + schema + " "
+        + "Rules: exactly 5 buy_picks BULLISH only. "
+        + "shares_to_buy=int(" + str(capital) + "/entry_high). "
+        + "stop_loss=entry_high*" + str(round(1 - risk_pct/100, 4)) + ". "
+        + "capital_needed=shares_to_buy*entry_high. "
+        + "risk_amount=(entry_high-stop_loss)*shares_to_buy. "
+        + "conviction HIGH or MEDIUM. why max 10 words numbers only."
+    )
 
     message = client.messages.create(
         model="claude-sonnet-4-5",
-        max_tokens=4000,
+        max_tokens=1500,
         messages=[{"role": "user", "content": prompt}]
     )
 
     try:
-        return parse_claude_json(message.content[0].text)
+        brief = parse_claude_json(message.content[0].text)
+        brief["watchlist"] = wl
+        return brief
     except Exception as e:
         print("  WARNING: JSON parse failed (" + str(e) + "), using fallback")
-        watchlist_fallback = [{"name": s["name"], "ticker": s["ticker"],
-                               "price": s["last_close"], "change_pct": s["change_pct"],
-                               "rsi": s.get("rsi") or 50, "signal": "NEUTRAL",
-                               "momentum_score": s.get("momentum_score", 0)}
-                              for s in stock_data]
         return {
             "snapshot": "Market data fetched for " + str(len(stock_data)) + " stocks.",
             "buy_picks": [], "alerts": ["AI brief unavailable today."],
-            "watchlist": watchlist_fallback, "theme": "Review watchlist manually.",
+            "watchlist": wl, "theme": "Review watchlist manually.",
             "beginner_tip": "Wait for the brief to generate correctly before trading."
         }
 

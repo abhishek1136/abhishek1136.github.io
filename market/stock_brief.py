@@ -110,14 +110,55 @@ def compute_indicators(df):
 # ══════════════════════════════════════════════════════════
 
 def parse_claude_json(raw):
+    # Strip markdown fences
     raw = re.sub(r'^```json\s*', '', raw, flags=re.MULTILINE)
     raw = re.sub(r'^```\s*',     '', raw, flags=re.MULTILINE)
     raw = re.sub(r'```\s*$',     '', raw, flags=re.MULTILINE).strip()
+
+    # Extract outermost JSON object
     match = re.search(r'\{.*\}', raw, re.DOTALL)
     if match:
         raw = match.group(0)
+
+    # Fix trailing commas
     raw = re.sub(r',\s*([}\]])', r'\1', raw)
-    return json.loads(raw)
+
+    # Strategy 1: direct parse
+    try:
+        return json.loads(raw)
+    except Exception:
+        pass
+
+    # Strategy 2: replace smart quotes and special apostrophes
+    raw2 = raw
+    raw2 = raw2.replace('\u2018', "'").replace('\u2019', "'")
+    raw2 = raw2.replace('\u201c', '"').replace('\u201d', '"')
+    raw2 = raw2.replace('\u2013', '-').replace('\u2014', '-')
+    try:
+        return json.loads(raw2)
+    except Exception:
+        pass
+
+    # Strategy 3: sanitize all string values — escape unescaped special chars
+    # Replace unescaped single quotes inside JSON strings with escaped version
+    raw3 = re.sub(r"(?<!\\)'", "\\'", raw2)
+    try:
+        return json.loads(raw3)
+    except Exception:
+        pass
+
+    # Strategy 4: use json repair approach — remove problematic lines
+    lines = raw.split('\n')
+    clean_lines = []
+    for line in lines:
+        try:
+            clean_line = line.encode('ascii', 'ignore').decode('ascii')
+            clean_lines.append(clean_line)
+        except Exception:
+            clean_lines.append('')
+    raw4 = '\n'.join(clean_lines)
+    raw4 = re.sub(r',\s*([}\]])', r'\1', raw4)
+    return json.loads(raw4)
 
 
 def generate_brief_with_claude(stock_data, capital, risk_pct):
@@ -185,7 +226,8 @@ Rules:
 - conviction: HIGH / MEDIUM based on how many indicators align
 - watchlist: ALL """ + str(len(stock_data)) + """ stocks, sorted by momentum_score desc
 - signal: BULLISH / BEARISH / NEUTRAL / WATCH
-- No hedging language. Direct. Beginner-friendly explanations."""
+- No hedging language. Direct. Beginner-friendly explanations.
+- CRITICAL: Use only plain ASCII in all text fields. No apostrophes, no smart quotes, no special characters. Write "Divis Labs" not "Divi's Labs". JSON must parse cleanly."""
 
     message = client.messages.create(
         model="claude-sonnet-4-5",

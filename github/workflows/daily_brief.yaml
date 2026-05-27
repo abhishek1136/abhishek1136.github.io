@@ -2,10 +2,10 @@ name: Daily Morning Brief
 
 on:
   schedule:
-    # 8:30 AM IST = 3:00 AM UTC (IST is UTC+5:30)
-    - cron: '0 3 * * 1-5'   # Mon–Fri only
+    # 8:30 AM IST = 3:00 AM UTC
+    - cron: '0 3 * * 1-5'
 
-  # Also lets you trigger manually from GitHub UI anytime
+  # Run manually anytime from GitHub Actions tab
   workflow_dispatch:
 
 jobs:
@@ -28,12 +28,14 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-        run: python stock_brief.py
+        run: |
+          cd market
+          python stock_brief.py
 
       - name: Commit and push data.json
         run: |
           git config user.name  "Stock Agent Bot"
           git config user.email "abhi.nath1136@gmail.com"
-          git add data.json
-          git diff --staged --quiet || git commit -m "Auto brief - $(date +'%Y-%m-%d %H:%M IST')"
+          git add market/data.json
+          git diff --staged --quiet || git commit -m "Auto brief - $(date +'%Y-%m-%d')"
           git push

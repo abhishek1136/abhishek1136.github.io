@@ -1,0 +1,39 @@
+name: Daily Morning Brief
+
+on:
+  schedule:
+    # 8:30 AM IST = 3:00 AM UTC (IST is UTC+5:30)
+    - cron: '0 3 * * 1-5'   # Mon–Fri only
+
+  # Also lets you trigger manually from GitHub UI anytime
+  workflow_dispatch:
+
+jobs:
+  run-brief:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance pandas ta anthropic
+
+      - name: Run stock analysis agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python stock_brief.py
+
+      - name: Commit and push data.json
+        run: |
+          git config user.name  "Stock Agent Bot"
+          git config user.email "abhi.nath1136@gmail.com"
+          git add data.json
+          git diff --staged --quiet || git commit -m "Auto brief - $(date +'%Y-%m-%d %H:%M IST')"
+          git push

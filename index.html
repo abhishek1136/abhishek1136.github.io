@@ -804,6 +804,51 @@ footer {
         <span class="pill">NSE India</span>
         <span class="pill">JSON API</span>
       </div>
+
+      <!-- INDICATORS EXPLAINER -->
+      <div style="margin-bottom:2.5rem;">
+        <div style="font-family:var(--mono);font-size:0.6rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.25rem;">How the momentum score is calculated</div>
+        <div style="font-size:0.82rem;color:var(--muted2);font-weight:300;line-height:1.7;margin-bottom:1.25rem;">Each stock is assigned a score from 0 to 100. The higher the score, the more technical signals are aligned bullishly. Five indicators contribute:</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.5rem;">
+          <div style="background:var(--bg2);padding:1.25rem 1.5rem;">
+            <div style="font-family:var(--mono);font-size:0.6rem;color:var(--accent);letter-spacing:0.1em;margin-bottom:0.5rem;">RSI &middot; 25 pts</div>
+            <div style="font-size:0.78rem;color:var(--muted2);line-height:1.6;"><strong style="color:var(--text);font-weight:400;">Relative Strength Index</strong> &mdash; measures if a stock is being bought or sold too aggressively. A score between 45&ndash;65 is the sweet spot: not overheated, not in free fall. Think of it like a thermometer for buying pressure.</div>
+          </div>
+          <div style="background:var(--bg2);padding:1.25rem 1.5rem;">
+            <div style="font-family:var(--mono);font-size:0.6rem;color:var(--accent);letter-spacing:0.1em;margin-bottom:0.5rem;">MACD &middot; 20 pts</div>
+            <div style="font-size:0.78rem;color:var(--muted2);line-height:1.6;"><strong style="color:var(--text);font-weight:400;">Moving Average Convergence Divergence</strong> &mdash; detects shifts in momentum before they show up in price. When the MACD line crosses above its signal line, buyers are taking control.</div>
+          </div>
+          <div style="background:var(--bg2);padding:1.25rem 1.5rem;">
+            <div style="font-family:var(--mono);font-size:0.6rem;color:var(--accent);letter-spacing:0.1em;margin-bottom:0.5rem;">Moving Averages &middot; 35 pts</div>
+            <div style="font-size:0.78rem;color:var(--muted2);line-height:1.6;"><strong style="color:var(--text);font-weight:400;">MA20 and MA50</strong> &mdash; the average price over the last 20 and 50 trading days. A stock above both is in an uptrend. Like checking if a runner is ahead of their own pace line.</div>
+          </div>
+          <div style="background:var(--bg2);padding:1.25rem 1.5rem;">
+            <div style="font-family:var(--mono);font-size:0.6rem;color:var(--accent);letter-spacing:0.1em;margin-bottom:0.5rem;">Volume Spike &middot; 20 pts</div>
+            <div style="font-size:0.78rem;color:var(--muted2);line-height:1.6;"><strong style="color:var(--text);font-weight:400;">Unusual trading volume</strong> &mdash; when a stock trades at 1.5&times; or more its average daily volume, it signals large institutional investors are moving in. Retail investors rarely move markets; institutions do.</div>
+          </div>
+        </div>
+
+        <div style="font-family:var(--mono);font-size:0.6rem;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;">How the pipeline works &mdash; for non-engineers</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:1.1rem 1.25rem;">
+            <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.4rem;">yfinance</div>
+            <div style="font-size:0.78rem;color:var(--muted2);line-height:1.6;">A free Python library that pulls live stock prices from Yahoo Finance. No subscription, no API key &mdash; like automatically reading a public website every morning.</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:1.1rem 1.25rem;">
+            <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.4rem;">GitHub Actions</div>
+            <div style="font-size:0.78rem;color:var(--muted2);line-height:1.6;">GitHub built-in cloud scheduler. Runs the Python script on a remote server every weekday at 8:30 AM IST automatically &mdash; no PC required, 2,000 free minutes per month.</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:1.1rem 1.25rem;">
+            <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.4rem;">Anthropic Claude API</div>
+            <div style="font-size:0.78rem;color:var(--muted2);line-height:1.6;">Receives all computed numbers and writes the analyst summary in plain English. Same model powering Claude.ai &mdash; used programmatically here to generate structured trading briefs.</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:1.1rem 1.25rem;">
+            <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.4rem;">GitHub Pages</div>
+            <div style="font-size:0.78rem;color:var(--muted2);line-height:1.6;">Free static website hosting. The live dashboard is a single HTML file reading a JSON data file updated each morning &mdash; no server, no database, no hosting cost.</div>
+          </div>
+        </div>
+      </div>
+
       <div class="metrics">
         <div class="metric"><div class="metric-val">50</div><div class="metric-label">Stocks tracked</div></div>
         <div class="metric"><div class="metric-val">8:30</div><div class="metric-label">AM daily run</div></div>

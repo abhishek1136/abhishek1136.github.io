@@ -1,11 +1,8 @@
 name: Daily Morning Brief
 
 on:
-  schedule:
-    # 8:30 AM IST = 3:00 AM UTC
-    - cron: '0 3 * * 1-5'
-
-  # Run manually anytime from GitHub Actions tab
+  # Triggered externally by cron-job.org at 8:00 AM IST (2:30 AM UTC) Mon-Fri
+  # Do NOT re-enable the schedule block below — cron-job.org is more reliable
   workflow_dispatch:
 
 jobs:

@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-05-28 06:45:40",
-  "date": "28 May 2026",
-  "weekday": "Thursday",
+  "generated_at": "2026-05-29 01:50:54",
+  "date": "29 May 2026",
+  "weekday": "Friday",
   "stats": {
     "total": 48,
     "gainers": 33,
     "losers": 14,
     "vol_spikes": 8
   },
-  "snapshot": "Market shows selective strength. IT, metals, PSU banks gaining. Volume spikes in Wipro, NTPC, Hindalco, Coal India. Pharma, banking steady. Quality stocks trading above key moving averages.",
-  "theme": "Momentum building in IT, metals and PSUs with strong volume participation",
-  "beginner_tip": "Volume confirmation is crucial. High volume with price rise signals genuine buying interest and stronger moves ahead.",
+  "snapshot": "Market shows mixed sentiment with metals and power stocks rallying. Volume spikes in Wipro, NTPC, Hindalco, Coal India signal institutional interest. Banking and pharma sectors trading steady above key moving averages.",
+  "theme": "Momentum building in industrials and metals with strong volume confirmation",
+  "beginner_tip": "Volume spikes above 1.5x average often precede significant moves. Combine with RSI below 70 for safer entries.",
   "buy_picks": [
     {
       "rank": 1,
@@ -22,13 +22,13 @@
       "entry_high": 203.0,
       "stop_loss": 198.94,
       "target_1": 210.0,
-      "target_2": 217.0,
+      "target_2": 218.0,
       "hold_days": "3-5",
       "shares_to_buy": 123,
       "capital_needed": 24969.0,
       "risk_amount": 499.38,
       "conviction": "HIGH",
-      "why": "RSI 54 MACD 1.33 volume 1.79x above MA50"
+      "why": "RSI 54 MACD 1.33 vol 1.79x above MA50"
     },
     {
       "rank": 2,
@@ -41,33 +41,15 @@
       "stop_loss": 392.0,
       "target_1": 415.0,
       "target_2": 428.0,
-      "hold_days": "4-6",
+      "hold_days": "3-5",
       "shares_to_buy": 62,
       "capital_needed": 24800.0,
       "risk_amount": 496.0,
       "conviction": "HIGH",
-      "why": "Volume 1.7x spike 2.17pct gain above MA50"
+      "why": "Strong 2.17pct gain vol 1.7x RSI 56.6"
     },
     {
       "rank": 3,
-      "name": "Larsen and Toubro",
-      "ticker": "LT.NS",
-      "price": 4047.5,
-      "change_pct": 0.24,
-      "entry_low": 4035.0,
-      "entry_high": 4060.0,
-      "stop_loss": 3978.8,
-      "target_1": 4200.0,
-      "target_2": 4320.0,
-      "hold_days": "4-7",
-      "shares_to_buy": 6,
-      "capital_needed": 24360.0,
-      "risk_amount": 487.2,
-      "conviction": "HIGH",
-      "why": "RSI 60.8 MACD 11.4 strong 5.7pct above MA50"
-    },
-    {
-      "rank": 4,
       "name": "Axis Bank",
       "ticker": "AXISBANK.NS",
       "price": 1304.1,
@@ -75,37 +57,55 @@
       "entry_low": 1300.0,
       "entry_high": 1310.0,
       "stop_loss": 1283.8,
-      "target_1": 1360.0,
-      "target_2": 1400.0,
-      "hold_days": "3-6",
+      "target_1": 1355.0,
+      "target_2": 1385.0,
+      "hold_days": "4-6",
       "shares_to_buy": 19,
       "capital_needed": 24890.0,
       "risk_amount": 497.8,
+      "conviction": "HIGH",
+      "why": "RSI 56.5 MACD 6.21 above MA50 momentum"
+    },
+    {
+      "rank": 4,
+      "name": "Larsen and Toubro",
+      "ticker": "LT.NS",
+      "price": 4047.5,
+      "change_pct": 0.24,
+      "entry_low": 4035.0,
+      "entry_high": 4060.0,
+      "stop_loss": 3978.8,
+      "target_1": 4210.0,
+      "target_2": 4320.0,
+      "hold_days": "4-6",
+      "shares_to_buy": 6,
+      "capital_needed": 24360.0,
+      "risk_amount": 487.2,
       "conviction": "MEDIUM",
-      "why": "RSI 56.5 MACD 6.21 trending above MA50"
+      "why": "RSI 60.8 MACD 11.4 strong uptrend MA50"
     },
     {
       "rank": 5,
-      "name": "Apollo Hospitals",
-      "ticker": "APOLLOHOSP.NS",
-      "price": 8272.5,
-      "change_pct": 0.17,
-      "entry_low": 8250.0,
-      "entry_high": 8300.0,
-      "stop_loss": 8134.0,
-      "target_1": 8600.0,
-      "target_2": 8850.0,
-      "hold_days": "5-8",
-      "shares_to_buy": 3,
-      "capital_needed": 24900.0,
-      "risk_amount": 498.0,
+      "name": "BPCL",
+      "ticker": "BPCL.NS",
+      "price": 307.15,
+      "change_pct": 0.84,
+      "entry_low": 305.0,
+      "entry_high": 309.0,
+      "stop_loss": 302.82,
+      "target_1": 320.0,
+      "target_2": 330.0,
+      "hold_days": "3-5",
+      "shares_to_buy": 80,
+      "capital_needed": 24720.0,
+      "risk_amount": 494.4,
       "conviction": "MEDIUM",
-      "why": "RSI 64.5 MACD 17.81 strong 7pct above MA50"
+      "why": "RSI 54.9 MACD 2.03 above MA50 uptrend"
     }
   ],
   "alerts": [
-    "Coal India extreme volume 7.74x average unusual activity",
-    "Hindalco RSI 69.2 approaching overbought zone"
+    "Hindalco RSI 69.2 approaching overbought zone",
+    "Coal India exceptional volume 7.74x average needs caution"
   ],
   "watchlist": [
     {

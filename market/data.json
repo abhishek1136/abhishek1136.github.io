@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-26 02:31:36",
-  "date": "26 June 2026",
-  "weekday": "Friday",
+  "generated_at": "2026-06-29 02:31:44",
+  "date": "29 June 2026",
+  "weekday": "Monday",
   "stats": {
     "total": 48,
     "gainers": 22,
     "losers": 26,
     "vol_spikes": 5
   },
-  "snapshot": "Indian markets show selective strength at opening. Auto and healthcare lead with volume breakouts. Banking stable, pharma consolidating. Momentum favors sectors with strong fundamentals and technical confirmation.",
-  "theme": "Volume breakouts in autos and healthcare driving morning momentum.",
-  "beginner_tip": "Focus on stocks above 50-day average with rising volume for safer entries in trending markets.",
+  "snapshot": "Market shows selective strength with auto and healthcare leading. Banking stable, pharma consolidating. Volume spikes in MARUTI, Max Healthcare signal institutional interest. Momentum favors quality largecaps.",
+  "theme": "Auto and healthcare sectors driving momentum with strong volume participation.",
+  "beginner_tip": "Volume spikes confirm institutional buying. Combine with RSI under 65 for safer entries.",
   "buy_picks": [
     {
       "rank": 1,
@@ -21,14 +21,14 @@
       "entry_low": 13700.0,
       "entry_high": 13800.0,
       "stop_loss": 13524.0,
-      "target_1": 14250.0,
-      "target_2": 14650.0,
+      "target_1": 14350.0,
+      "target_2": 14900.0,
       "hold_days": "3-5",
       "shares_to_buy": 1,
       "capital_needed": 13800.0,
       "risk_amount": 276.0,
       "conviction": "HIGH",
-      "why": "RSI 60 MACD 28 vol 2.1x above MA50"
+      "why": "RSI 60.5 volume 2.12x above MA50 breakout"
     },
     {
       "rank": 2,
@@ -39,14 +39,14 @@
       "entry_low": 794.0,
       "entry_high": 800.0,
       "stop_loss": 784.0,
-      "target_1": 825.0,
-      "target_2": 845.0,
+      "target_1": 830.0,
+      "target_2": 860.0,
       "hold_days": "4-6",
       "shares_to_buy": 31,
       "capital_needed": 24800.0,
       "risk_amount": 496.0,
       "conviction": "HIGH",
-      "why": "RSI 64 MACD 5.7 above MA50 stable"
+      "why": "RSI 64.4 MACD 5.71 above MA50 stable"
     },
     {
       "rank": 3,
@@ -57,14 +57,14 @@
       "entry_low": 1042.0,
       "entry_high": 1050.0,
       "stop_loss": 1029.0,
-      "target_1": 1085.0,
-      "target_2": 1115.0,
+      "target_1": 1095.0,
+      "target_2": 1135.0,
       "hold_days": "3-5",
       "shares_to_buy": 23,
       "capital_needed": 24150.0,
       "risk_amount": 483.0,
       "conviction": "HIGH",
-      "why": "RSI 63 MACD 5.3 above MA50 momentum"
+      "why": "RSI 63.8 MACD 5.31 above MA50 momentum"
     },
     {
       "rank": 4,
@@ -75,37 +75,37 @@
       "entry_low": 975.0,
       "entry_high": 985.0,
       "stop_loss": 965.3,
-      "target_1": 1020.0,
-      "target_2": 1045.0,
+      "target_1": 1025.0,
+      "target_2": 1060.0,
       "hold_days": "4-6",
       "shares_to_buy": 25,
       "capital_needed": 24625.0,
       "risk_amount": 492.5,
       "conviction": "MEDIUM",
-      "why": "RSI 64 MACD 8.5 above MA50 dip"
+      "why": "RSI 64.2 MACD 8.5 above MA50 pullback"
     },
     {
       "rank": 5,
-      "name": "Tata Consumer",
-      "ticker": "TATACONSUM.NS",
-      "price": 1131.3,
-      "change_pct": 3.02,
-      "entry_low": 1125.0,
-      "entry_high": 1135.0,
-      "stop_loss": 1112.3,
-      "target_1": 1170.0,
-      "target_2": 1195.0,
-      "hold_days": "3-5",
-      "shares_to_buy": 22,
-      "capital_needed": 24970.0,
-      "risk_amount": 499.4,
+      "name": "Sun Pharma",
+      "ticker": "SUNPHARMA.NS",
+      "price": 1862.8,
+      "change_pct": -0.62,
+      "entry_low": 1855.0,
+      "entry_high": 1870.0,
+      "stop_loss": 1832.6,
+      "target_1": 1940.0,
+      "target_2": 2000.0,
+      "hold_days": "4-6",
+      "shares_to_buy": 13,
+      "capital_needed": 24310.0,
+      "risk_amount": 486.2,
       "conviction": "MEDIUM",
-      "why": "RSI 50 vol 1.5x breakout 3 percent"
+      "why": "RSI 62.6 MACD 7.47 above MA50 consolidation"
     }
   ],
   "alerts": [
-    "Maruti volume spike 2.1x watch momentum continuation",
-    "Max Healthcare RSI 72 overbought caution"
+    "MARUTI volume 2.12x average strong momentum breakout",
+    "Max Healthcare RSI 72.3 overbought reduce position size"
   ],
   "watchlist": [
     {
@@ -383,7 +383,7 @@
       "ticker": "ADANIPORTS.NS",
       "price": 1796.0,
       "change_pct": -0.95,
-      "rsi": 51.5,
+      "rsi": 51.4,
       "signal": "WATCH",
       "momentum_score": 45
     },
@@ -401,7 +401,7 @@
       "ticker": "POWERGRID.NS",
       "price": 283.9,
       "change_pct": -2.41,
-      "rsi": 39.6,
+      "rsi": 39.5,
       "signal": "NEUTRAL",
       "momentum_score": 35
     },
